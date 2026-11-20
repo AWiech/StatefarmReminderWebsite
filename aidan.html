@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Stuff Page</title>
+  <style>
+    :root {
+      --bg: #f4f4f9;
+      --card: #ffffff;
+      --text: #222222;
+      --accent: #4f46e5;
+    }
+    body.dark {
+      --bg: #121212;
+      --card: #1e1e1e;
+      --text: #f4f4f9;
+      --accent: #818cf8;
+    }
+    body {
+      font-family: system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 2rem;
+      transition: background 0.3s, color 0.3s;
+    }
+    .container {
+      width: 100%;
+      max-width: 450px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .card {
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover { opacity: 0.9; }
+    .row { display: flex; gap: 0.5rem; }
+    input {
+      flex: 1;
+      padding: 0.6rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    ul { padding-left: 1.2rem; margin-top: 1rem; }
+    li { margin-bottom: 0.5rem; cursor: pointer; }
+    li.done { text-decoration: line-through; opacity: 0.6; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- 1. Theme & Color Changer -->
+    <div class="card">
+      <h2>🎨 Vibe Check</h2>
+      <div class="row">
+        <button onclick="toggleDark()">Toggle Dark Mode</button>
+        <button onclick="randomColor()">Random Accent</button>
+      </div>
+    </div>
+
+    <!-- 2. Click Counter -->
+    <div class="card">
+      <h2>🔢 Click Counter</h2>
+      <p>Count: <strong id="count">0</strong></p>
+      <div class="row">
+        <button onclick="updateCount(1)">+1</button>
+        <button onclick="updateCount(-1)">-1</button>
+        <button onclick="updateCount(0)">Reset</button>
+      </div>
+    </div>
+
+    <!-- 3. Mini To-Do List -->
+    <div class="card">
+      <h2>✅ Quick Tasks</h2>
+      <div class="row">
+        <input type="text" id="taskInput" placeholder="Add something to do...">
+        <button onclick="addTask()">Add</button>
+      </div>
+      <ul id="taskList"></ul>
+    </div>
+  </div>
+
+  <script>
+    // Dark mode & random accent color
+    function toggleDark() {
+      document.body.classList.toggle('dark');
+    }
+    function randomColor() {
+      const hex = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+      document.documentElement.style.setProperty('--accent', hex);
+    }
+
+    // Counter logic
+    let count = 0;
+    function updateCount(change) {
+      count = change === 0 ? 0 : count + change;
+      document.getElementById('count').textContent = count;
+    }
+
+    // To-do list logic
+    function addTask() {
+      const input = document.getElementById('taskInput');
+      if (!input.value.trim()) return;
+      
+      const li = document.createElement('li');
+      li.textContent = input.value;
+      li.onclick = () => li.classList.toggle('done');
+      
+      document.getElementById('taskList').appendChild(li);
+      input.value = '';
+    }
+  </script>
+
+</body>
+</html>
