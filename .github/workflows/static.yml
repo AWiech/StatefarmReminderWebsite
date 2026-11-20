@@ -50,13 +50,7 @@ jobs:
                   artifact_id: artifact.id,
                 });
               }
-            }
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          name: github-pages
-          path: '.'   
+            }  
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
